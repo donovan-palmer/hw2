@@ -1,3 +1,3 @@
 class Studio < ApplicationRecord
-  has_many :movies, dependent: :destroy
+  has_many :movies
 end
