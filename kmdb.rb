@@ -75,7 +75,7 @@
 # ====================
 # Christian Bale
 
-# NOTE TO: Data seeding lives in db/seeds.rb; this script calls
+# NOTE: Data seeding lives in db/seeds.rb; this script calls
 # `Rails.application.load_seed` to populate the database with sample data.
 Rails.application.load_seed
 
@@ -85,26 +85,23 @@ def print_header(title)
   puts ""
 end
 
-print_header("Movies")
 
 # Query the movies data and loop through the results to display the movies output.
+print_header("Movies")
 Movie.includes("studio").order("year_released").each do |movie|
   puts format("%-23s %-14s %-6s %s", movie.title, movie.year_released, movie.rated, movie.studio.name)
 end
 
-puts ""
-print_header("Top Cast")
-
 # Query the cast data and loop through the results to display the cast output for each movie.
+print_header("Top Cast")
 Movie.includes("roles" => "actor").order("year_released").each do |movie|
   movie.roles.order("id").each do |role|
     puts format("%-23s %-23s %s", movie.title, role.actor.name, role.character_name)
   end
 end
 
-puts ""
-print_header("Represented by agent")
 # Query the actor data and loop through the results to display the agent's list of represented actors output.
+print_header("Represented by agent")
 Agent.find_by("name" => "Ari Emanuel").actors.order("name").each do |actor|
   puts actor.name
 end
